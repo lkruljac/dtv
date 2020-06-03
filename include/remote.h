@@ -14,7 +14,7 @@
 #include <pthread.h>
 
 #include "globals.h"
-
+#include "streamplayer.h"
 
 int32_t inputFileDesc;
 

@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <pthread.h>
+#include "pat.h"
 
 #define NUM_EVENTS  	5
 #define NON_STOP    	1
@@ -15,11 +16,14 @@
 
 
 struct volumeStatus{
-	int volume;
-	int volumeBackUp;
-	int muteFlag;
+	uint32_t volume;
+	uint32_t volumeBackUp;
+	uint32_t muteFlag;
 }volumeStatus;
 
+#define DEFAULTVOLUME	(100000000)
+#define MUTE			(0)
+#define MAX_VOLUME		(599999999)
 uint8_t defaultAudioPID;
 uint8_t defaultVideoPID;
 
@@ -37,5 +41,14 @@ extern struct config{
 
 extern pthread_cond_t statusCondition;
 extern pthread_mutex_t statusMutex;
+
+extern PAT_TABLE pat;
+
+
+extern uint32_t playerHandle;
+extern uint32_t sourceHandle;
+
+extern	uint32_t audioStreamHandle;
+extern	uint32_t videoStreamHandle;
 
 #endif

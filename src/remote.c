@@ -4,6 +4,16 @@
 #define EXIT    (10)
 #define NOERROR (0)
 
+static inline void textColor(int32_t attr, int32_t fg, int32_t bg)
+{
+   char command[13];
+
+   /* Command is the control command to the terminal */
+   sprintf(command, "%c[%d;%d;%dm", 0x1B, attr, fg + 30, bg + 40);
+   printf("%s", command);
+}
+
+
 void *listenRemote(){
     printf("Thread start here, now listening remote\n"); 
     const char* dev = "/dev/input/event0";
@@ -38,24 +48,22 @@ void *listenRemote(){
 			return;
 		}
         int result;
-        for(i = 0; i < eventCnt; i++)
-        {
-            result = processKey(eventBuf);
-            if(NOERROR == result){
+        result = processKey(eventBuf);
+        if(NOERROR == result){
 
-            }
-            else if(EXIT == result){
-                exit = 1;
-                printf("Exit from app\n");
-                break;
-            }
-            else if(MY_ERROR == result){
-                printf("Error\t while processing pressed Key\n");
-            }
-            else{
+        }
+        else if(EXIT == result){
+            exit = 1;
+            printf("Exit from app\n");
+            break;
+        }
+        else if(MY_ERROR == result){
+            printf("Error\t while processing pressed Key\n");
+        }
+        else{
 
-            }
-		}
+        }
+		
     }
 
 }
@@ -81,8 +89,9 @@ int32_t getKeys(int32_t count, uint8_t* buf, int32_t* eventsRead)
 
 int processKey(struct input_event *eventBuf){
     printf("Key\t(%d)\t pressed..\tType:%d,\tValue:%d\n", eventBuf->code, eventBuf->type, eventBuf->value);
-    
+    int result;
     int retValue = MY_NO_ERROR;
+    uint32_t volumeSTB;
     switch (eventBuf->code){
 
         case 102://exit
@@ -96,6 +105,12 @@ int processKey(struct input_event *eventBuf){
                 }
             }
             printf("Volume:\t%d\n", volumeStatus.volume);
+            Player_Volume_Get(playerHandle, &volumeSTB);
+            result = Player_Volume_Set(playerHandle, MAX_VOLUME*((float)volumeStatus.volume/100));
+            ASSERT_TDP_RESULT(result, "Volume set");
+            Player_Volume_Get(playerHandle, &volumeSTB);
+            printf("On: %d\n", volumeSTB);
+
             break;
 
         case 64://volumeDown
@@ -104,21 +119,31 @@ int processKey(struct input_event *eventBuf){
                     volumeStatus.volume--;				
                 }
             }
-            printf("Volume:\t%d\n", volumeStatus.volume);	
+            printf("Volume:\t%d\n", volumeStatus.volume);
+            Player_Volume_Get(playerHandle, &volumeSTB);
+            Player_Volume_Get(playerHandle, &volumeSTB);
+            printf("On: %d\n", volumeSTB);
+
+            result = Player_Volume_Set(playerHandle,  MAX_VOLUME*((float)volumeStatus.volume/100));
+            ASSERT_TDP_RESULT(result, "Volume set");
             break;
 
         case 60://Mute/Unmute
             if(eventBuf->type == 1 && eventBuf->value == 0){
                 //Unmute
-                if(volumeStatus.volume == 0){
+                if(volumeStatus.volume == 0 ){
                     volumeStatus.volume = volumeStatus.volumeBackUp;
                     printf("\tUnmuted\n");
+                    result = Player_Volume_Set(playerHandle,  MAX_VOLUME*((float)volumeStatus.volume/100));
+                    ASSERT_TDP_RESULT(result, "Volume set");
                 }
                 //Mute					
                 else{
                     printf("\tMuted\n");
                     volumeStatus.volumeBackUp = volumeStatus.volume;					
                     volumeStatus.volume = 0;
+                    result = Player_Volume_Set(playerHandle,  MUTE);
+                    ASSERT_TDP_RESULT(result, "Volume set");
                 }									
             }
             printf("Volume:\t%d\n", volumeStatus.volume);

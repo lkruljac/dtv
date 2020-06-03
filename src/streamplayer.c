@@ -3,8 +3,7 @@
 void* PlayStream(){
 	
 	int32_t result;
-    uint32_t playerHandle = 0;
-    uint32_t sourceHandle = 0;
+
     uint32_t filterHandle = 0;
 
     struct timespec lockStatusWaitTime;
@@ -49,8 +48,7 @@ void* PlayStream(){
 
 	tStreamType videoStreamType = VIDEO_TYPE_MPEG2;
 	tStreamType audioStreamType = AUDIO_TYPE_MPEG_AUDIO;
-	uint32_t audioStreamHandle = 0;
-	uint32_t videoStreamHandle = 0;
+
 	Player_Stream_Create(playerHandle, sourceHandle, videoPID, videoStreamType, &videoStreamHandle);
 	Player_Stream_Create(playerHandle, sourceHandle, audioPID, audioStreamType, &audioStreamHandle);
 
@@ -67,9 +65,8 @@ void* PlayStream(){
     /* Wait for a while to receive several PAT sections */
     fflush(stdin);
     
-	while(1){
-		printf("Bla\n");
-	}
+    printf("Press any key to stop\n");
+	getchar();
     
 
 	/* Deinitialization */
@@ -81,7 +78,7 @@ void* PlayStream(){
     /* Close previously opened source */
     result = Player_Source_Close(playerHandle, sourceHandle);
     ASSERT_TDP_RESULT(result, "Player_Source_Close");
-    
+    Player_Volume_Set(playerHandle, DEFAULTVOLUME);
     /* Deinit player */
     result = Player_Deinit(playerHandle);
     ASSERT_TDP_RESULT(result, "Player_Deinit");
@@ -123,10 +120,9 @@ int32_t myPrivateTunerStatusCallback(t_LockStatus status)
 int32_t mySecFilterCallback(uint8_t *buffer)
 {
     //printf("\n\nSection arrived!!!\n\n");
-    PAT_TABLE pat;
 	parseBufferToPat(buffer, &pat);
 
-	printPatTable(&pat);
+	//printPatTable(&pat);
 	return 0;
 }
 

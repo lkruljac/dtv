@@ -32,15 +32,16 @@ int main(int32_t argc, char** argv){
 		printf("Error during loading config file. Program is exiting now!\n");
 		exit(1);	
 	}
-	
-	//Start stream player thread with chanel loaded from config file
+	volumeStatus.volume = 17;
+
+	//Start stream
+	//	Playing chanell from cfg
+	//	Parsing PAT & PMT
 	pthread_t thread_PlayStream;
 	printf("Play stream thread called!\n");
 	pthread_create(&thread_PlayStream, NULL, PlayStream, NULL);
-	pthread_join(thread_PlayStream, NULL);
+
 	
-	/*
-	//Parse stream for PAT & PMT
 	
 	//Enable overlayer drawing
 	
@@ -48,9 +49,11 @@ int main(int32_t argc, char** argv){
 	pthread_t thread_listenRemote;
 	printf("Remote listen thread called!\n");
 	pthread_create(&thread_listenRemote, NULL, listenRemote, NULL);
+
+	pthread_join(thread_PlayStream, NULL);
 	pthread_join(thread_listenRemote, NULL);
 
-	*/
+	
 
 	return 0;
 }
