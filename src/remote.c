@@ -1,8 +1,8 @@
 #include"remote.h"
 
-
 #define EXIT    (10)
 #define NOERROR (0)
+
 
 
 void *listenRemote(){
@@ -13,6 +13,7 @@ void *listenRemote(){
     uint32_t eventCnt;
     uint32_t i;
     
+
     inputFileDesc = open(dev, O_RDWR);
     if(inputFileDesc == -1)
     {
@@ -57,6 +58,11 @@ void *listenRemote(){
 		
     }
 
+    if(exit){
+        pthread_join(thread_PlayStream, NULL);
+        PlayStreamDeintalization();
+    }
+
 }
 
 int32_t getKeys(int32_t count, uint8_t* buf, int32_t* eventsRead)
@@ -97,10 +103,10 @@ int processKey(struct input_event *eventBuf){
             }
             printf("Volume:\t%d\n", volumeStatus.volume);
             Player_Volume_Get(playerHandle, &volumeSTB);
-            result = Player_Volume_Set(playerHandle, MAX_VOLUME*((float)volumeStatus.volume/100));
+            result = Player_Volume_Set(playerHandle, (uint32_t) ( MAX_VOLUME* ((float)volumeStatus.volume/100)));
             ASSERT_TDP_RESULT(result, "Volume set");
             Player_Volume_Get(playerHandle, &volumeSTB);
-            printf("On: %d\n", volumeSTB);
+            printf("On: %u\n", volumeSTB);
 
             break;
 
@@ -115,7 +121,7 @@ int processKey(struct input_event *eventBuf){
             Player_Volume_Get(playerHandle, &volumeSTB);
             printf("On: %d\n", volumeSTB);
 
-            result = Player_Volume_Set(playerHandle,  MAX_VOLUME*((float)volumeStatus.volume/100));
+            result = Player_Volume_Set(playerHandle, (uint32_t) ( MAX_VOLUME* ((float)volumeStatus.volume/100)));
             ASSERT_TDP_RESULT(result, "Volume set");
             break;
 

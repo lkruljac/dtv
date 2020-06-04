@@ -34,5 +34,10 @@ typedef struct PMT_TABLE{
 	STREAM *stream;
 }PMT_TABLE;
 
+void *ParsePmt();
+int32_t myPMTSecFilterCallback(uint8_t *buffer);
+void parseBufferToPmt(uint8_t *buffer, PMT_TABLE *pmt);
+void printPmtTable(PMT_TABLE *pmt);
+
 
 #endif

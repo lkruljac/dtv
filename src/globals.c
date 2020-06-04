@@ -12,6 +12,10 @@ struct config config;
 pthread_cond_t statusCondition = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t statusMutex = PTHREAD_MUTEX_INITIALIZER;
 
+pthread_t thread_PlayStream;
+pthread_t thread_ParsePat;
+pthread_t thread_ParsePmt;
+
 PAT_TABLE pat;
 PMT_TABLE *pmt = NULL;
 int parserProgramIndex = 0;
@@ -27,5 +31,3 @@ extern	uint32_t videoStreamHandle = 0;
 
 int patFlag = 0;
 int pmtFlag = 0;
-
-extern int pmtTableParsedFlag = 0;

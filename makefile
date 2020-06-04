@@ -39,6 +39,8 @@ SRC+= $(SRCFOLDER)remote.c
 SRC+= $(SRCFOLDER)globals.c 
 SRC+= $(SRCFOLDER)configTool.c 
 SRC+= $(SRCFOLDER)streamplayer.c
+SRC+= $(SRCFOLDER)pat.c
+SRC+= $(SRCFOLDER)pmt.c
 
 all: clean kruljac copy
 

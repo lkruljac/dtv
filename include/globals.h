@@ -25,9 +25,8 @@ struct volumeStatus{
 
 
 
-#define DEFAULTVOLUME	(-100000000)
 #define MUTE			(0)
-#define MAX_VOLUME		(599999999)
+#define MAX_VOLUME		(0x7FFFFFFF)
 uint8_t defaultAudioPID;
 uint8_t defaultVideoPID;
 
@@ -45,6 +44,10 @@ extern struct config{
 
 extern pthread_cond_t statusCondition;
 extern pthread_mutex_t statusMutex;
+extern pthread_t thread_PlayStream;
+
+extern pthread_t thread_ParsePat;
+extern pthread_t thread_ParsePmt;
 
 extern PAT_TABLE pat;
 extern PMT_TABLE *pmt;
@@ -60,7 +63,5 @@ extern	uint32_t videoStreamHandle;
 
 extern int patFlag;
 extern int pmtFlag;
-
-extern int pmtTableParsedFlag;
 
 #endif

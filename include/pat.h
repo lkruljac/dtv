@@ -1,6 +1,8 @@
 #ifndef PAT_H
 #define PAT_H
 
+#include "tdp_api.h"
+
 typedef struct PROGRAM{
 	uint16_t program_number;
 	uint8_t reserved;
@@ -25,5 +27,9 @@ typedef struct PAT_TABLE{
 	PROGRAM *program;
 }PAT_TABLE;
 
+void *ParsePat();
+void parseBufferToPat(uint8_t *buffer, PAT_TABLE *pat);
+void printPatTable(PAT_TABLE *pat);
+int32_t mySecFilterCallback(uint8_t *buffer);
 
 #endif

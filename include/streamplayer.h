@@ -31,10 +31,6 @@ int32_t mySecFilterCallback(uint8_t *buffer);
 int32_t myStreamFilterCallback(uint8_t *buffer);
 
 void* PlayStream();
-
-void parseBufferToPat(uint8_t *buffer, PAT_TABLE *pat);
-void parseBufferToPmt(uint8_t *buffer, PMT_TABLE *pmt);
-void printPatTable(PAT_TABLE *pat);
-void printPmtTable(PMT_TABLE *pmt);
+void PlayStreamDeintalization();
 
 #endif
