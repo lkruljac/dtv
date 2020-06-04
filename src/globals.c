@@ -3,9 +3,13 @@
 
 struct volumeStatus volumeStatus;
 
+struct chanelStatus	chanelStatus;
 
 uint8_t defaultAudioPID;
 uint8_t defaultVideoPID;
+
+
+ PROGRAM_MAP *program_map = NULL;
 
 struct config config;
 
@@ -26,8 +30,8 @@ uint32_t filterHandle = 0;
 
 uint32_t filterHandelArray[8] = {0};
 
-extern	uint32_t audioStreamHandle = 0;
-extern	uint32_t videoStreamHandle = 0;
+uint32_t audioStreamHandle = 0;
+uint32_t videoStreamHandle = 0;
 
 int patFlag = 0;
 int pmtFlag = 0;

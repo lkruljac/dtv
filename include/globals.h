@@ -5,6 +5,7 @@
 #include <pthread.h>
 #include "pat.h"
 #include "pmt.h"
+#include "programmap.h"
 
 #define NUM_EVENTS  	5
 #define NON_STOP    	1
@@ -22,6 +23,12 @@ struct volumeStatus{
 	uint32_t muteFlag;
 }volumeStatus;
 
+struct chanelStatus{
+	int currentProgram;
+	int numberOfPrograms;
+	int startProgramNumber;
+	int endProgamNumber;
+}chanelStatus;
 
 
 
@@ -29,6 +36,8 @@ struct volumeStatus{
 #define MAX_VOLUME		(0x7FFFFFFF)
 uint8_t defaultAudioPID;
 uint8_t defaultVideoPID;
+
+extern PROGRAM_MAP *program_map;
 
 extern struct config{
 	int freq;

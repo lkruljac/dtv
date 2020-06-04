@@ -1,12 +1,16 @@
 #include "pat.h"
-
+#include "pmt.h"
 #include "globals.h"
 #include "streamplayer.h"
+#include "programmap.h"
 
 void *ParsePmt(){
 	printf("\nNow parsing pmts in separated thread...\n");
 	int result;
     pmt = malloc(pat.programCounter * sizeof(PMT_TABLE));
+    
+    program_map = malloc(pat.programCounter * sizeof(PROGRAM_MAP));
+
 	uint32_t patFilterHandle;
     int programIndex;
     for(programIndex=1; programIndex<pat.programCounter; programIndex++){
@@ -19,8 +23,9 @@ void *ParsePmt(){
 		pthread_mutex_lock(&statusMutex);
         /* Set filter to demux */
 		printf("\nTrying to filter progroma with pid: \t%d\n", pat.program[programIndex].pid);
+        //result = Demux_Set_Filter(playerHandle, (uint32_t) 100, 0x02, &patFilterHandle);
         result = Demux_Set_Filter(playerHandle, (uint32_t) pat.program[programIndex].pid, 0x02, &patFilterHandle);
-        ASSERT_TDP_RESULT(result, "Demux_Set_Filter-PMT set");
+		ASSERT_TDP_RESULT(result, "Demux_Set_Filter-PMT set");
         /* Register section filter callback */
         result = Demux_Register_Section_Filter_Callback(myPMTSecFilterCallback);
         ASSERT_TDP_RESULT(result, "Demux_Register_Stream_Filter_Callback-PMT set");
@@ -41,8 +46,11 @@ void *ParsePmt(){
         ASSERT_TDP_RESULT(result, "Demux_Free_Filter-PMT done");
 
    		pthread_mutex_unlock(&statusMutex);
-     
+
+        PMT_to_ProgramMap(pmt[programIndex], programIndex);
+
     }
+    Print_ProgramMap();
 }
 
 int32_t myPMTSecFilterCallback(uint8_t *buffer)
@@ -158,5 +166,147 @@ void parseBufferToPmt(uint8_t *buffer, PMT_TABLE *pmt){
         pmt->streamCounter++;
     }
     pmt->CRC = buffer[12 + pmt->program_info_lenght + streamIndexBit];
+
+}
+
+void PMT_to_ProgramMap(PMT_TABLE pmt, int index){
+	
+    int i;
+    for(i=0; i<pmt.streamCounter; i++){
+        printf("StreamType:\t%d\n", pmt.stream[i].stream_type );
+        
+        switch( pmt.stream[i].stream_type ){
+            case 2:
+                program_map[index].audioPID = pmt.stream[i].elementary_PID;
+                program_map[index].audioType = AUDIO_TYPE_MPEG_AUDIO;
+                break;
+
+            case 3:
+                program_map[index].videoPID = pmt.stream[i].elementary_PID;
+                program_map[index].videoType = VIDEO_TYPE_MPEG2;
+                break;
+            
+            
+        }
+        
+        /*
+        switch(getTypeOfStreamType(pmt.stream[i].stream_type)){
+
+            case AUDIO_ST:
+                program_map[index].audioPID = pmt.stream[i].elementary_PID;
+                program_map[index].audioPID = getAudioType(pmt.stream[i].stream_type);
+                break;
+            
+            case VIDEO_ST:
+                program_map[index].videoPID = pmt.stream[i].elementary_PID;
+                program_map[index].audioType = getVideoType(pmt.stream[i].stream_type);
+                break;
+            
+            default:
+                printf("########\tstream_type %u ignored!!\n", pmt.stream[i].stream_type);
+                break;
+        }
+        */
+    }
+   
+}
+
+
+tStreamType getAudioType(int type){
+	tStreamType ret = 0;
+	switch(type){
+		case  0x03:
+			ret = AUDIO_TYPE_MPEG_AUDIO	;
+			break;
+		case  0x04:
+			ret = AUDIO_TYPE_MPEG_AUDIO	 ;
+			break;
+		case  0x0F:
+			ret = AUDIO_TYPE_HE_AAC;
+			break;
+		case  0x83:
+			ret = AUDIO_TYPE_DOLBY_TRUE_HD;
+			break;
+		case  0x84:
+			ret = AUDIO_TYPE_DOLBY_TRUE_HD;
+			break;
+		case  0x85:
+			ret = AUDIO_TYPE_DOLBY_TRUE_HD ;
+			break;
+		default:
+			break;
+	}	
+	return ret;
+}
+
+tStreamType getVideoType(int type){
+	tStreamType ret = 0;
+	switch(type){
+		case  0x01:
+			ret =     VIDEO_TYPE_MPEG1 	;
+			break;
+		case  0x02:
+			ret =     VIDEO_TYPE_MPEG2 	 ;
+			break;
+		case  0x10:
+			ret =     VIDEO_TYPE_MPEG4 ;
+			break;
+		case  0x1B:
+			ret = VIDEO_TYPE_MPEG4 ;
+			break;
+		case  0x24:
+			ret = 0;
+			break;
+		default:
+			break;
+	}	
+	return ret;
+}
+
+int getTypeOfStreamType(uint8_t type){
+    
+    int returnValue = 0;
+    //video
+    if(type == 0x01
+        || type == 0x02 
+        || type == 0x10
+        || type == 0x1b
+        || type == 0x24)
+    {
+        returnValue = VIDEO_ST;
+    }
+    //audio
+    else if(type == 0x03
+        || type == 0x04 
+        || type == 0x0F
+        || type == 0x83
+        || type == 0x84
+        || type == 0x85)
+    {
+        returnValue = AUDIO_ST;
+    }
+	else{
+		printf("\n#########\t%d je nista od navedneog############\n");
+	}
+    //TODO
+    //rest
+    return returnValue;
+
+}
+
+
+void Print_ProgramMap(){
+	int i;
+	int size;
+	size = pat.programCounter;
+	printf("\n\t\tPROGRAM_MAP:\n");
+	for(i=0; i<size; i++){
+		printf("\n\t\t\tProgram index:\t %d", i);
+		printf("\n\t\t\tAudioPID:\t %d", program_map[i].audioPID);
+		printf("\n\t\t\tAudiotype:\t %d", program_map[i].audioType);
+		printf("\n\t\t\tVideoPID:\t %d", program_map[i].videoPID);
+		printf("\n\t\t\tVideoType:\t %d", program_map[i].videoType);
+		printf("\n###############\n");
+	}
 
 }

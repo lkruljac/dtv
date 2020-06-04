@@ -1,6 +1,27 @@
 #ifndef PMT_H
 #define PMT_H
 
+#include "tdp_api.h"
+
+#define AUDIO_ST 	(1)
+#define VIDEO_ST	(2)
+
+typedef struct PROGRAM_MAP{
+	uint32_t videoPID;
+	uint32_t audioPID;
+	tStreamType videoType;
+	tStreamType audioType;
+}PROGRAM_MAP;
+
+//TODO
+//return 
+//  0 - invalid type
+//  1 - audio type
+//  2 - video type
+//  3 - titlovi
+int getTypeOfStreamType(uint8_t type);
+
+
 typedef struct STREAM{
 	uint8_t stream_type;
 	uint8_t reserved;
@@ -38,6 +59,11 @@ void *ParsePmt();
 int32_t myPMTSecFilterCallback(uint8_t *buffer);
 void parseBufferToPmt(uint8_t *buffer, PMT_TABLE *pmt);
 void printPmtTable(PMT_TABLE *pmt);
+
+
+void PMT_to_ProgramMap(PMT_TABLE pmt, int index);
+tStreamType getAudioType(int type);
+tStreamType getVideoType(int type);
 
 
 #endif

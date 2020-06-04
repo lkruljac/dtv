@@ -34,7 +34,10 @@ int main(int32_t argc, char** argv){
 		printf("Error during loading config file. Program is exiting now!\n");
 		exit(1);	
 	}
+	//Init global variables
 	volumeStatus.volume = 10;
+	chanelStatus.currentProgram = 0;
+	chanelStatus.startProgramNumber = 0;
 
 	//	Start Stream
 	//	Playing chanell from cfg

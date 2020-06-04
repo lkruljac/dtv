@@ -42,7 +42,7 @@ void* PlayStream(){
     ASSERT_TDP_RESULT(result, "Player_Source_Open");
    	
 	uint32_t audioPID = config.apid;
-	uint32_t videoPID = config.vpid; 	
+	uint32_t videoPID = 201; 	
 
 	tStreamType videoStreamType = VIDEO_TYPE_MPEG2;
 	tStreamType audioStreamType = AUDIO_TYPE_MPEG_AUDIO;
@@ -102,3 +102,37 @@ int32_t myPrivateTunerStatusCallback(t_LockStatus status)
     }
     return 0;
 }
+
+void changePlayStreamOnChanell(int newChanellNumber){
+   	
+    Player_Stream_Remove(playerHandle, sourceHandle, videoStreamHandle);
+	Player_Stream_Remove(playerHandle, sourceHandle, audioStreamHandle);
+
+    /*
+    Player_Source_Close(playerHandle, sourceHandle);
+    Player_Deinit(playerHandle);
+    
+    int result;
+
+    result = Player_Init(&playerHandle);
+	
+    ASSERT_TDP_RESULT(result, "Player_Init");
+    
+    result = Player_Source_Open(playerHandle, &sourceHandle);
+    ASSERT_TDP_RESULT(result, "Player_Source_Open");
+   	*/
+
+    uint32_t audioPID = program_map[newChanellNumber].audioPID;
+    //uint32_t audioPID = 103;
+	uint32_t videoPID = 201;
+    //uint32_t videoPID = program_map[newChanellNumber].videoPID;
+
+	tStreamType videoStreamType = program_map[newChanellNumber].videoType;
+	tStreamType audioStreamType = program_map[newChanellNumber].audioType;
+
+   	
+	Player_Stream_Create(playerHandle, sourceHandle, videoPID, VIDEO_TYPE_MPEG2, &videoStreamHandle);
+	Player_Stream_Create(playerHandle, sourceHandle, audioPID, AUDIO_TYPE_MPEG_AUDIO, &audioStreamHandle); 
+}
+
+

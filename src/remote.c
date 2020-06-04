@@ -1,4 +1,5 @@
 #include"remote.h"
+#include"streamplayer.h"
 
 #define EXIT    (10)
 #define NOERROR (0)
@@ -84,12 +85,14 @@ int32_t getKeys(int32_t count, uint8_t* buf, int32_t* eventsRead)
 
 
 
-int processKey(struct input_event *eventBuf){
+int processKey(struct input_event *eventBuf)
+{
     printf("Key\t(%d)\t pressed..\tType:%d,\tValue:%d\n", eventBuf->code, eventBuf->type, eventBuf->value);
     int result;
     int retValue = MY_NO_ERROR;
     uint32_t volumeSTB;
-    switch (eventBuf->code){
+    switch (eventBuf->code)
+    {
 
         case 102://exit
             retValue = EXIT;
@@ -145,10 +148,41 @@ int processKey(struct input_event *eventBuf){
             }
             printf("Volume:\t%d\n", volumeStatus.volume);
             break;
-        
+
+        case 61://Program down
+            if(eventBuf->type == 1 && eventBuf->value == 0)
+            {                
+                if(chanelStatus.currentProgram == chanelStatus.endProgamNumber)
+                {
+                    chanelStatus.currentProgram = chanelStatus.startProgramNumber;
+                }
+                else
+                {
+                    chanelStatus.currentProgram++;
+                }
+                changePlayStreamOnChanell(chanelStatus.currentProgram);
+            }
+            break;
+
+        case 62://Program up
+            if(eventBuf->type == 1 && eventBuf->value == 0)
+            {
+                if(chanelStatus.currentProgram == chanelStatus.endProgamNumber){
+                    chanelStatus.currentProgram = chanelStatus.startProgramNumber;
+                }
+                else
+                {
+                    chanelStatus.currentProgram++;
+                }
+                changePlayStreamOnChanell(chanelStatus.currentProgram);
+            } 
+            break;
+    
+    
+
         default:
             if(eventBuf->code >= 0 || eventBuf->code <= 9){
-                //changeChanel(eventBuf->code);
+                changePlayStreamOnChanell(eventBuf->code);
             }
             retValue = MY_ERROR;
             break;
