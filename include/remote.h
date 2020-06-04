@@ -19,6 +19,8 @@
 int32_t inputFileDesc;
 
 void *listenRemote();
-int32_t getKeys(int32_t count, uint8_t* buf, int32_t* eventsRead);	
+int32_t getKeys(int32_t count, uint8_t* buf, int32_t* eventsRead);
+
+
 
 #endif

@@ -4,15 +4,6 @@
 #define EXIT    (10)
 #define NOERROR (0)
 
-static inline void textColor(int32_t attr, int32_t fg, int32_t bg)
-{
-   char command[13];
-
-   /* Command is the control command to the terminal */
-   sprintf(command, "%c[%d;%d;%dm", 0x1B, attr, fg + 30, bg + 40);
-   printf("%s", command);
-}
-
 
 void *listenRemote(){
     printf("Thread start here, now listening remote\n"); 
@@ -148,11 +139,15 @@ int processKey(struct input_event *eventBuf){
             }
             printf("Volume:\t%d\n", volumeStatus.volume);
             break;
-
+        
         default:
+            if(eventBuf->code >= 0 || eventBuf->code <= 9){
+                //changeChanel(eventBuf->code);
+            }
             retValue = MY_ERROR;
             break;
     }
 
     return retValue;
 }
+

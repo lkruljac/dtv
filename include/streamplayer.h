@@ -14,7 +14,7 @@
 
 
 
-static inline void textColor(int32_t attr, int32_t fg, int32_t bg);
+inline void textColor(int32_t attr, int32_t fg, int32_t bg);
 
 #define ASSERT_TDP_RESULT(x,y)  if(NO_ERROR == x) \
                                     printf("%s success\n", y); \
@@ -28,11 +28,13 @@ static inline void textColor(int32_t attr, int32_t fg, int32_t bg);
 int32_t myPrivateTunerStatusCallback(t_LockStatus status);
 int32_t mySecFilterCallback(uint8_t *buffer);
 
+int32_t myStreamFilterCallback(uint8_t *buffer);
 
 void* PlayStream();
 
 void parseBufferToPat(uint8_t *buffer, PAT_TABLE *pat);
+void parseBufferToPmt(uint8_t *buffer, PMT_TABLE *pmt);
 void printPatTable(PAT_TABLE *pat);
-
+void printPmtTable(PMT_TABLE *pmt);
 
 #endif
