@@ -167,12 +167,12 @@ int processKey(struct input_event *eventBuf)
         case 62://Program up
             if(eventBuf->type == 1 && eventBuf->value == 0)
             {
-                if(chanelStatus.currentProgram == chanelStatus.endProgamNumber){
-                    chanelStatus.currentProgram = chanelStatus.startProgramNumber;
+                if(chanelStatus.currentProgram == chanelStatus.startProgramNumber){
+                    chanelStatus.currentProgram = chanelStatus.endProgamNumber;
                 }
                 else
                 {
-                    chanelStatus.currentProgram++;
+                    chanelStatus.currentProgram--;
                 }
                 changePlayStreamOnChanell(chanelStatus.currentProgram);
             } 
