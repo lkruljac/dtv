@@ -29,7 +29,7 @@ LIBS := $(LIBS_PATH) -ltdp
 LIBS += $(LIBS_PATH) -lOSAL	-lshm -lPEAgent
 LIBS += $(LIBS_PATH) -ldirectfb -ldirect -lfusion -lrt
 
-CFLAGS += -D__LINUX__ -O0 -Wno-psabi --sysroot=$(SYSROOT) -Iinclude -Itdp_api/
+CFLAGS += -D__LINUX__ -O0 -Wno-psabi --sysroot=$(SYSROOT) -Iinclude -Itdp_api/ -I$(SYSROOT)/usr/include/directfb/
 #CFLAGS += -Iinclude
 CXXFLAGS = $(CFLAGS)
 
@@ -42,6 +42,7 @@ SRC+= $(SRCFOLDER)streamplayer.c
 SRC+= $(SRCFOLDER)pat.c
 SRC+= $(SRCFOLDER)pmt.c
 SRC+= $(SRCFOLDER)programmap.c
+SRC+= $(SRCFOLDER)graphic.c
 
 all: clean kruljac copy
 
@@ -50,6 +51,7 @@ kruljac:
 
 copy:
 	cp kruljac /home/student/pputvios1/ploca
+	cp config.cfg /home/student/pputvios1/ploca
 
 clean:
 	rm -f kruljac

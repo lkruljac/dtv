@@ -6,6 +6,7 @@
 #include "pat.h"
 #include "pmt.h"
 #include "programmap.h"
+#include <directfb.h>
 
 #define NUM_EVENTS  	5
 #define NON_STOP    	1
@@ -38,6 +39,7 @@ uint8_t defaultAudioPID;
 uint8_t defaultVideoPID;
 
 extern PROGRAM_MAP *program_map;
+extern PROGRAM_MAP program_mapHC[8];
 
 extern struct config{
 	int freq;
@@ -53,8 +55,9 @@ extern struct config{
 
 extern pthread_cond_t statusCondition;
 extern pthread_mutex_t statusMutex;
-extern pthread_t thread_PlayStream;
 
+extern pthread_t thread_PlayStream;
+extern pthread_t thread_Graphic;
 extern pthread_t thread_ParsePat;
 extern pthread_t thread_ParsePmt;
 
@@ -72,5 +75,13 @@ extern	uint32_t videoStreamHandle;
 
 extern int patFlag;
 extern int pmtFlag;
+
+
+extern IDirectFBSurface *primary;
+extern IDirectFB *dfbInterface;
+extern int screenWidth;
+extern int screenHeight;
+extern DFBSurfaceDescription surfaceDesc;
+
 
 #endif

@@ -1,5 +1,5 @@
 #include <stdio.h>
-//#include <directfb.h>
+#include <directfb.h>
 #include <stdint.h>
 #include <time.h>
 #include <signal.h>
@@ -17,6 +17,7 @@
 #include "streamplayer.h"
 #include "pat.h"
 #include "pmt.h"
+#include "graphic.h"
 
 int main(int32_t argc, char** argv){
 	
@@ -27,6 +28,11 @@ int main(int32_t argc, char** argv){
     }
 	char* configFileName;
 	configFileName = strdup(argv[1]);
+
+	//Start graphic
+	printf("Grahpic thread called!\n");
+	pthread_create(&thread_Graphic, NULL, GraphicThread, NULL);
+
 
 	//Parsing config file
 	printf("Parssing config file on path: \"%s\"\n\n", configFileName);

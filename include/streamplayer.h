@@ -33,4 +33,6 @@ int32_t myStreamFilterCallback(uint8_t *buffer);
 void* PlayStream();
 void PlayStreamDeintalization();
 
+void changePlayStreamOnChanell();
+
 #endif
