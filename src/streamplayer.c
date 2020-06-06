@@ -42,7 +42,7 @@ void* PlayStream(){
     ASSERT_TDP_RESULT(result, "Player_Source_Open");
    	
 	uint32_t audioPID = config.apid;
-	uint32_t videoPID = 201; 	
+	uint32_t videoPID = config.vpid; 	
 
 	tStreamType videoStreamType = VIDEO_TYPE_MPEG2;
 	tStreamType audioStreamType = AUDIO_TYPE_MPEG_AUDIO;
@@ -53,9 +53,11 @@ void* PlayStream(){
     fflush(stdin);
     pthread_mutex_unlock(&statusMutex);
     printf("Press any key to stop\n");
-	getchar();
-    
-	/* Deinitialization */
+
+    getchar();
+	while(getchar() );
+	
+    /* Deinitialization */
     PlayStreamDeintalization();
 		
 }
@@ -103,7 +105,7 @@ int32_t myPrivateTunerStatusCallback(t_LockStatus status)
     return 0;
 }
 
-void changePlayStreamOnChanell(int newChanellNumber){
+void changePlayStreamOnChanell(int ChanellNumber){
    	
     Player_Stream_Remove(playerHandle, sourceHandle, videoStreamHandle);
 	Player_Stream_Remove(playerHandle, sourceHandle, audioStreamHandle);
@@ -122,13 +124,13 @@ void changePlayStreamOnChanell(int newChanellNumber){
     ASSERT_TDP_RESULT(result, "Player_Source_Open");
    	*/
 
-    uint32_t audioPID = program_map[newChanellNumber].audioPID;
+    uint32_t audioPID = program_mapHC[ChanellNumber].audioPID;
     //uint32_t audioPID = 103;
-	uint32_t videoPID = 201;
-    //uint32_t videoPID = program_map[newChanellNumber].videoPID;
-
-	tStreamType videoStreamType = program_map[newChanellNumber].videoType;
-	tStreamType audioStreamType = program_map[newChanellNumber].audioType;
+	//uint32_t videoPID = 201;
+    uint32_t videoPID = program_mapHC[ChanellNumber].videoPID;
+    //printf("Novi pidovi su %d i %d za kanal %d\n", audioPID, videoPID, chanelStatus.currentProgram);
+	//tStreamType videoStreamType = program_map[ChanellNumber].videoType;
+	//tStreamType audioStreamType = program_map[ChanellNumber].audioType;
 
    	
 	Player_Stream_Create(playerHandle, sourceHandle, videoPID, VIDEO_TYPE_MPEG2, &videoStreamHandle);

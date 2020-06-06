@@ -1,5 +1,6 @@
 #include"remote.h"
 #include"streamplayer.h"
+#include"graphic.h"
 
 #define EXIT    (10)
 #define NOERROR (0)
@@ -105,11 +106,9 @@ int processKey(struct input_event *eventBuf)
                 }
             }
             printf("Volume:\t%d\n", volumeStatus.volume);
-            Player_Volume_Get(playerHandle, &volumeSTB);
             result = Player_Volume_Set(playerHandle, (uint32_t) ( MAX_VOLUME* ((float)volumeStatus.volume/100)));
             ASSERT_TDP_RESULT(result, "Volume set");
-            Player_Volume_Get(playerHandle, &volumeSTB);
-            printf("On: %u\n", volumeSTB);
+            drawVolumeFlag = 1;
 
             break;
 
@@ -120,12 +119,9 @@ int processKey(struct input_event *eventBuf)
                 }
             }
             printf("Volume:\t%d\n", volumeStatus.volume);
-            Player_Volume_Get(playerHandle, &volumeSTB);
-            Player_Volume_Get(playerHandle, &volumeSTB);
-            printf("On: %d\n", volumeSTB);
-
             result = Player_Volume_Set(playerHandle, (uint32_t) ( MAX_VOLUME* ((float)volumeStatus.volume/100)));
             ASSERT_TDP_RESULT(result, "Volume set");
+            drawVolumeFlag = 1;
             break;
 
         case 60://Mute/Unmute
@@ -152,13 +148,14 @@ int processKey(struct input_event *eventBuf)
         case 61://Program down
             if(eventBuf->type == 1 && eventBuf->value == 0)
             {                
-                if(chanelStatus.currentProgram == chanelStatus.endProgamNumber)
+                if(chanelStatus.currentProgram == chanelStatus.startProgramNumber)
                 {
-                    chanelStatus.currentProgram = chanelStatus.startProgramNumber;
+                    chanelStatus.currentProgram = chanelStatus.endProgamNumber;
                 }
                 else
                 {
-                    chanelStatus.currentProgram++;
+                    printf("OvoDown");
+                    chanelStatus.currentProgram--;
                 }
                 changePlayStreamOnChanell(chanelStatus.currentProgram);
             }
@@ -167,12 +164,13 @@ int processKey(struct input_event *eventBuf)
         case 62://Program up
             if(eventBuf->type == 1 && eventBuf->value == 0)
             {
-                if(chanelStatus.currentProgram == chanelStatus.startProgramNumber){
-                    chanelStatus.currentProgram = chanelStatus.endProgamNumber;
+                if(chanelStatus.currentProgram == chanelStatus.endProgamNumber){
+                    chanelStatus.currentProgram = chanelStatus.startProgramNumber;
                 }
                 else
                 {
-                    chanelStatus.currentProgram--;
+                    printf("OvoUp");
+                    chanelStatus.currentProgram++;
                 }
                 changePlayStreamOnChanell(chanelStatus.currentProgram);
             } 
@@ -183,6 +181,7 @@ int processKey(struct input_event *eventBuf)
         default:
             if(eventBuf->code >= 0 || eventBuf->code <= 9){
                 changePlayStreamOnChanell(eventBuf->code);
+                break;
             }
             retValue = MY_ERROR;
             break;

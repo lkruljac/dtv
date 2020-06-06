@@ -9,7 +9,7 @@ uint8_t defaultAudioPID;
 uint8_t defaultVideoPID;
 
 
- PROGRAM_MAP *program_map = NULL;
+PROGRAM_MAP *program_map = NULL;
 
 PROGRAM_MAP program_mapHC[8] = {
 
@@ -23,48 +23,48 @@ PROGRAM_MAP program_mapHC[8] = {
 
 	//1
 	{
-		.audioPID = 103,
-		.videoPID= 101,
+		.audioPID = 203,
+		.videoPID= 201,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
 	},
 
 	//2
 	{
-		.audioPID = 103,
-		.videoPID= 101,
+		.audioPID = 1003,
+		.videoPID= 1001,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
 	},
 
 	//3
 	{
-		.audioPID = 103,
-		.videoPID= 101,
+		.audioPID = 1503,
+		.videoPID= 1501,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
 	},
 
 	//4
 	{
-		.audioPID = 103,
-		.videoPID= 101,
+		.audioPID = 2003,
+		.videoPID= 2001,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
 	},
 
 	//5
 	{
-		.audioPID = 103,
-		.videoPID= 101,
+		.audioPID = 2013,
+		.videoPID= 2011,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
 	},
 
 	//6
 	{
-		.audioPID = 103,
-		.videoPID= 101,
+		.audioPID = 2023,
+		.videoPID= 2021,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
 	},
@@ -111,3 +111,7 @@ IDirectFB *dfbInterface = NULL;
 int screenWidth = 0;
 int screenHeight = 0;
 DFBSurfaceDescription surfaceDesc;
+
+int drawVolumeFlag = 0 ;
+
+int drawCurrentChanellFlag = 0;

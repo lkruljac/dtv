@@ -47,7 +47,7 @@ void *ParsePmt(){
 
    		pthread_mutex_unlock(&statusMutex);
 
-        PMT_to_ProgramMap(pmt[programIndex], programIndex);
+        //PMT_to_ProgramMap(pmt[programIndex], programIndex);
 
     }
     Print_ProgramMap();
@@ -302,10 +302,10 @@ void Print_ProgramMap(){
 	printf("\n\t\tPROGRAM_MAP:\n");
 	for(i=0; i<size; i++){
 		printf("\n\t\t\tProgram index:\t %d", i);
-		printf("\n\t\t\tAudioPID:\t %d", program_map[i].audioPID);
-		printf("\n\t\t\tAudiotype:\t %d", program_map[i].audioType);
-		printf("\n\t\t\tVideoPID:\t %d", program_map[i].videoPID);
-		printf("\n\t\t\tVideoType:\t %d", program_map[i].videoType);
+		printf("\n\t\t\tAudioPID:\t %d", program_mapHC[i].audioPID);
+		printf("\n\t\t\tAudiotype:\t %d", program_mapHC[i].audioType);
+		printf("\n\t\t\tVideoPID:\t %d", program_mapHC[i].videoPID);
+		printf("\n\t\t\tVideoType:\t %d", program_mapHC[i].videoType);
 		printf("\n###############\n");
 	}
 

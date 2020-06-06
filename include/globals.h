@@ -84,4 +84,8 @@ extern int screenHeight;
 extern DFBSurfaceDescription surfaceDesc;
 
 
+extern int drawVolumeFlag;
+
+extern int drawCurrentChanellFlag;
+
 #endif

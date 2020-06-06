@@ -13,7 +13,9 @@ if (err != DFB_OK)                                          \
 }
 
 
-void *GraphicThread();
 
+
+void *GraphicThread();
+void DrawLogo();
 
 #endif

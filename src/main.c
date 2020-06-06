@@ -44,7 +44,9 @@ int main(int32_t argc, char** argv){
 	volumeStatus.volume = 10;
 	chanelStatus.currentProgram = 0;
 	chanelStatus.startProgramNumber = 0;
+	chanelStatus.endProgamNumber = 7;
 
+	
 	//	Start Stream
 	//	Playing chanell from cfg
 	printf("Play stream thread called!\n");
