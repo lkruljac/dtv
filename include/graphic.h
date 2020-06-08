@@ -18,5 +18,5 @@ if (err != DFB_OK)                                          \
 void *GraphicThread();
 void DrawLogo();
 void DrawVolumeStatus();
-
+void DrawChanell();
 #endif

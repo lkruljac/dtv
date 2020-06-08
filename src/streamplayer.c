@@ -135,6 +135,8 @@ void changePlayStreamOnChanell(int ChanellNumber){
    	
 	Player_Stream_Create(playerHandle, sourceHandle, videoPID, VIDEO_TYPE_MPEG2, &videoStreamHandle);
 	Player_Stream_Create(playerHandle, sourceHandle, audioPID, AUDIO_TYPE_MPEG_AUDIO, &audioStreamHandle); 
+
+    drawCurrentChanellFlag = 1;
 }
 
 

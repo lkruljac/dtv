@@ -113,7 +113,6 @@ int screenHeight = 0;
 DFBSurfaceDescription surfaceDesc;
 
 int drawVolumeFlag = 0 ;
-
 int drawCurrentChanellFlag = 0;
 
 IDirectFBFont *fontInterface = NULL;

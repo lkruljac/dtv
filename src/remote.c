@@ -140,7 +140,8 @@ int processKey(struct input_event *eventBuf)
                     volumeStatus.volume = 0;
                     result = Player_Volume_Set(playerHandle,  MUTE);
                     ASSERT_TDP_RESULT(result, "Volume set");
-                }									
+                }	
+                drawVolumeFlag = 1;								
             }
             printf("Volume:\t%d\n", volumeStatus.volume);
             break;
@@ -180,6 +181,7 @@ int processKey(struct input_event *eventBuf)
             
         default:
             if(eventBuf->code >= 0 || eventBuf->code <= 9){
+                chanelStatus.currentProgram = eventBuf->code;
                 changePlayStreamOnChanell(eventBuf->code);
                 break;
             }
