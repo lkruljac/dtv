@@ -181,6 +181,9 @@ int processKey(struct input_event *eventBuf)
             
         default:
             if(eventBuf->code >= 0 || eventBuf->code <= 9){
+                if(listenPwd == 1){
+                    pwd = eventBuf->code; 
+                }
                 chanelStatus.currentProgram = eventBuf->code;
                 changePlayStreamOnChanell(eventBuf->code);
                 break;

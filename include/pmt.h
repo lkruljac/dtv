@@ -11,6 +11,8 @@ typedef struct PROGRAM_MAP{
 	uint32_t audioPID;
 	tStreamType videoType;
 	tStreamType audioType;
+	int radioFlag;
+	int contentRank; 
 }PROGRAM_MAP;
 
 //TODO

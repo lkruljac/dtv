@@ -19,6 +19,8 @@ PROGRAM_MAP program_mapHC[8] = {
 		.videoPID= 101,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
+		.contentRank = 12,
+		.radioFlag = 0
 	},
 
 	//1
@@ -27,6 +29,8 @@ PROGRAM_MAP program_mapHC[8] = {
 		.videoPID= 201,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
+		.contentRank = 12,
+		.radioFlag = 0
 	},
 
 	//2
@@ -35,6 +39,8 @@ PROGRAM_MAP program_mapHC[8] = {
 		.videoPID= 1001,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
+		.contentRank = 10,
+		.radioFlag = 0
 	},
 
 	//3
@@ -43,6 +49,8 @@ PROGRAM_MAP program_mapHC[8] = {
 		.videoPID= 1501,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
+		.contentRank = 12,
+		.radioFlag = 0
 	},
 
 	//4
@@ -51,14 +59,18 @@ PROGRAM_MAP program_mapHC[8] = {
 		.videoPID= 2001,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
+		.contentRank = 12,
+		.radioFlag = 0
 	},
 
 	//5
 	{
-		.audioPID = 2013,
-		.videoPID= 2011,
+		.audioPID = 2103,
+		.videoPID= 2101,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
+		.contentRank = 12,
+		.radioFlag = 1
 	},
 
 	//6
@@ -67,14 +79,18 @@ PROGRAM_MAP program_mapHC[8] = {
 		.videoPID= 2021,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
+		.contentRank = 12,
+		.radioFlag = 1
 	},
 
 	//7
 	{
-		.audioPID = 103,
-		.videoPID= 101,
+		.audioPID = 2033,
+		.videoPID= 2031,
 		.audioType = AUDIO_TYPE_MPEG_AUDIO,
 		.videoType = VIDEO_TYPE_MPEG2,
+		.contentRank = 12,
+		.radioFlag = 1
 	}
 
 
@@ -114,6 +130,10 @@ DFBSurfaceDescription surfaceDesc;
 
 int drawVolumeFlag = 0 ;
 int drawCurrentChanellFlag = 0;
+int listenPwd = 0;
+int drawForbidenContentFlag = 0;
+int pwd = 0;
+
 
 IDirectFBFont *fontInterface = NULL;
 DFBFontDescription fontDesc;

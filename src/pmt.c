@@ -101,6 +101,9 @@ void printPmtTable(PMT_TABLE *pmt){
 
 
 void parseBufferToPmt(uint8_t *buffer, PMT_TABLE *pmt){
+    
+    
+    
     pmt->table_id = buffer[0];
     
     pmt->section_syntax_indicator = (buffer[1] & 0b10000000) >> 7;
@@ -137,15 +140,7 @@ void parseBufferToPmt(uint8_t *buffer, PMT_TABLE *pmt){
     pmt->program_info_lenght <<=8;
     pmt->program_info_lenght += buffer[11];
 
-    /*
-    int descriptorBytSize = pmt->program_info_lenght / 8;
-    if(descriptorBytSize < (float)(pmt->program_info_lenght/8)){
-        descriptorBytSize+=1;
-    }
-    pmt->descriptor = malloc(sizeof (descriptorBytSize));
-    pmt->descriptor = buffer[12] & 
-    */
-
+    
     int loopBitSize = pmt->section_lenght - 9 - 4; //if descriptor is size 0
     int streamMaxNumber = loopBitSize/5;
     pmt->stream = malloc(sizeof(STREAM)*streamMaxNumber);
@@ -165,7 +160,36 @@ void parseBufferToPmt(uint8_t *buffer, PMT_TABLE *pmt){
         streamIndexBit = 5 + pmt->stream[pmt->streamCounter].ES_info_lenght;
         pmt->streamCounter++;
     }
-    pmt->CRC = buffer[12 + pmt->program_info_lenght + streamIndexBit];
+
+    
+
+   /*
+    int varA = pmt->program_info_lenght;
+    int varB;
+    int sum_varB = 0;
+    int N = 0;
+    while((sum_varB + (5*N)) < ((pmt->section_lenght) - varA - 13))
+    {
+	    varB = (uint16_t)(((*(buffer+15+varA+sum_varB) << 8) + *(buffer+16+varA+sum_varB)) & 0x0FFF);  //es_info_length
+	    sum_varB += varB;  //es_info_length
+	    N++;
+    }
+
+    pmt->stream = (struct streams*)malloc(N * sizeof(STREAM));
+    pmt->streamCounter = N;
+    sum_varB = 0;
+    int j;
+    for(j=0; j<N; j++)  //poznat N iz prethodne
+    {
+        varB = (uint16_t)(((*(buffer+15+varA+sum_varB) << 8) + *(buffer+16+varA+sum_varB)) & 0x0FFF);  //es_info_length
+        sum_varB += varB;  //es_info_length
+
+        pmt->stream[j].stream_type = (uint8_t)((*(buffer+12+varA+sum_varB) << 0)  & 0xFF);
+        pmt->stream[j].elementary_PID = (uint16_t)(((*(buffer+13+varA+sum_varB) << 8) + *(buffer+14+varA+sum_varB)) & 0x1FFF);
+        pmt->stream[j].ES_info_lenght = varB;
+    }
+    */
+   pmt->CRC = buffer[12 + pmt->program_info_lenght + streamIndexBit];
 
 }
 

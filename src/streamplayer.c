@@ -110,20 +110,7 @@ void changePlayStreamOnChanell(int ChanellNumber){
     Player_Stream_Remove(playerHandle, sourceHandle, videoStreamHandle);
 	Player_Stream_Remove(playerHandle, sourceHandle, audioStreamHandle);
 
-    /*
-    Player_Source_Close(playerHandle, sourceHandle);
-    Player_Deinit(playerHandle);
-    
-    int result;
-
-    result = Player_Init(&playerHandle);
-	
-    ASSERT_TDP_RESULT(result, "Player_Init");
-    
-    result = Player_Source_Open(playerHandle, &sourceHandle);
-    ASSERT_TDP_RESULT(result, "Player_Source_Open");
-   	*/
-
+ 
     uint32_t audioPID = program_mapHC[ChanellNumber].audioPID;
     //uint32_t audioPID = 103;
 	//uint32_t videoPID = 201;
@@ -131,12 +118,16 @@ void changePlayStreamOnChanell(int ChanellNumber){
     //printf("Novi pidovi su %d i %d za kanal %d\n", audioPID, videoPID, chanelStatus.currentProgram);
 	//tStreamType videoStreamType = program_map[ChanellNumber].videoType;
 	//tStreamType audioStreamType = program_map[ChanellNumber].audioType;
-
-   	
-	Player_Stream_Create(playerHandle, sourceHandle, videoPID, VIDEO_TYPE_MPEG2, &videoStreamHandle);
-	Player_Stream_Create(playerHandle, sourceHandle, audioPID, AUDIO_TYPE_MPEG_AUDIO, &audioStreamHandle); 
-
+    
     drawCurrentChanellFlag = 1;
+
+    if(program_mapHC[ChanellNumber].radioFlag == 0){
+        Player_Stream_Create(playerHandle, sourceHandle, videoPID, VIDEO_TYPE_MPEG2, &videoStreamHandle);
+    }
+    Player_Stream_Create(playerHandle, sourceHandle, audioPID, AUDIO_TYPE_MPEG_AUDIO, &audioStreamHandle); 
+    
+    drawForbidenContentFlag = program_mapHC[ChanellNumber].contentRank > config.rating;
+    
 }
 
 

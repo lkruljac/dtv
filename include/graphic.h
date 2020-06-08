@@ -19,4 +19,8 @@ void *GraphicThread();
 void DrawLogo();
 void DrawVolumeStatus();
 void DrawChanell();
+void clearScreen();
+void DrawForbidenContent();
+
+
 #endif

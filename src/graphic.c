@@ -60,6 +60,10 @@ void *GraphicThread(){
 			DrawChanell();
 			drawCurrentChanellFlag = 0;
 		}
+		if(drawForbidenContentFlag){
+			drawForbidenContentFlag = 0;
+			DrawForbidenContent();
+		}
 
 	}
 
@@ -109,8 +113,6 @@ void DrawLogo(){
 void DrawVolumeStatus(){
 
 	clearScreen();
-
-
 
 
 	IDirectFBImageProvider *provider;
@@ -257,9 +259,58 @@ void DrawChanell(){
 	
     
     /* wait 5 seconds before terminating*/
-	sleep(2);
+	sleep(5);
 
 	clearScreen();
 
 
+}
+
+void DrawForbidenContent(){
+	clearScreen();
+
+	char String[35];
+
+	DFBCHECK(primary->SetColor(/*surface to draw on*/ primary,
+							/*red*/ 0xFF,
+							/*green*/ 0xFF,
+							/*blue*/ 0xFF,
+							/*alpha*/ 0xFF));			
+
+	DFBCHECK(primary->FillRectangle(/*surface to draw on*/ primary,
+									/*upper left x coordinate*/ 0,
+									/*upper left y coordinate*/ 0,
+									/*rectangle width*/ screenWidth,
+									/*rectangle height*/ screenHeight));
+	
+	
+	
+	sprintf(String, "Forbiden content, please insert password!", chanelStatus.currentProgram);
+	/* draw the text */
+	
+	DFBCHECK(primary->SetColor(/*surface to draw on*/ primary,
+								/*red*/ 0x25,
+								/*green*/ 0x2B,
+								/*blue*/ 0x87,
+								/*alpha*/ 0xff));			
+
+	DFBCHECK(primary->DrawString(primary,
+									/*text to be drawn*/ String,
+									/*number of bytes in the string, -1 for NULL terminated strings*/ -1,
+									/*x coordinate of the lower left corner of the resulting text*/ 15,
+									/*y coordinate of the lower left corner of the resulting text*/ 65,
+									/*in case of multiple lines, allign text to left*/ DSTF_LEFT));
+
+	
+	/* switch between the displayed and the work buffer (update the display) */
+	DFBCHECK(primary->Flip(primary,
+							/*region to be updated, NULL for the whole surface*/NULL,
+							/*flip flags*/0));
+
+	
+    
+    /* wait 5 seconds before terminating*/
+	sleep(5);
+
+	clearScreen();
 }

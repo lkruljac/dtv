@@ -86,7 +86,8 @@ extern IDirectFBFont *fontInterface;
 extern DFBFontDescription fontDesc;
 
 extern int drawVolumeFlag;
-
+extern int drawForbidenContentFlag;
 extern int drawCurrentChanellFlag;
-
+extern int listenPwd;
+extern int pwd;
 #endif
