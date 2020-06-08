@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <directfb.h>
 #include "globals.h"
+
 void *GraphicThread(){
 	
 
@@ -14,6 +15,16 @@ void *GraphicThread(){
     /* tell the DirectFB to take the full screen for this application */
 	DFBCHECK(dfbInterface->SetCooperativeLevel(dfbInterface, DFSCL_FULLSCREEN));
 
+
+
+	fontInterface = NULL;	
+	/* specify the height of the font by raising the appropriate flag and setting the height value */
+	fontDesc.flags = DFDESC_HEIGHT;
+	fontDesc.height = 48;
+	
+	/* create the font and set the created font for primary surface text drawing */
+	DFBCHECK(dfbInterface->CreateFont(dfbInterface, "/home/galois/fonts/DejaVuSans.ttf", &fontDesc, &fontInterface));
+	DFBCHECK(primary->SetFont(primary, fontInterface));
 	
 
 	/* create primary surface with double buffering enabled */
@@ -41,10 +52,13 @@ void *GraphicThread(){
 
 
 	while(1){
+
 		if(drawVolumeFlag){
 			DrawVolumeStatus();
 			drawVolumeFlag = 0;
 		}
+
+
 	}
 
 
@@ -89,58 +103,35 @@ void DrawLogo(){
 
 	primary->Release(primary);
 
-	dfbInterface->Release(dfbInterface);
+	//dfbInterface->Release(dfbInterface);
 }
 
 void DrawVolumeStatus(){
+
+	char volumeString[25];
+
 	
-	IDirectFBFont *fontInterface = NULL;
-	DFBFontDescription fontDesc;
+	/* draw the text */
 	
-    /* specify the height of the font by raising the appropriate flag and setting the height value */
-	fontDesc.flags = DFDESC_HEIGHT;
-	fontDesc.height = 48;
-	
-    /* create the font and set the created font for primary surface text drawing */
-	DFBCHECK(dfbInterface->CreateFont(dfbInterface, "/home/galois/fonts/DejaVuSans.ttf", &fontDesc, &fontInterface));
-	DFBCHECK(primary->SetFont(primary, fontInterface));
-    
 	DFBCHECK(primary->SetColor(/*surface to draw on*/ primary,
-						                   /*red*/ 0x00,
-						                   /*green*/ 0xFF,
-						                   /*blue*/ 0x00,
-						                   /*alpha*/ 0xff));
-
-    /* draw the text */
+								/*red*/ 0x00,
+								/*green*/ 0xFF,
+								/*blue*/ 0x00,
+								/*alpha*/ 0xff));				
 	DFBCHECK(primary->DrawString(primary,
-                                 /*text to be drawn*/ "Text Example",
-                                 /*number of bytes in the string, -1 for NULL terminated strings*/ -1,
-                                 /*x coordinate of the lower left corner of the resulting text*/ 100,
-                                 /*y coordinate of the lower left corner of the resulting text*/ 100,
-                                 /*in case of multiple lines, allign text to left*/ DSTF_LEFT));
-	
-    /* specify the height of the font by raising the appropriate flag and setting the height value */
-	fontDesc.flags = DFDESC_HEIGHT;
-	fontDesc.height = 48;
-	
-    /* create the font and set the created font for primary surface text drawing */
-	DFBCHECK(dfbInterface->CreateFont(dfbInterface, "/home/galois/fonts/DejaVuSans.ttf", &fontDesc, &fontInterface));
-	DFBCHECK(primary->SetFont(primary, fontInterface));
-    char volumeString[25];
-	sprintf(volumeString, "Volume status: %d/%", volumeStatus.volume);
-    /* draw the text */
-	DFBCHECK(primary->DrawString(primary,
-                                 /*text to be drawn*/ volumeString,
-                                 /*number of bytes in the string, -1 for NULL terminated strings*/ -1,
-                                 /*x coordinate of the lower left corner of the resulting text*/ 100,
-                                 /*y coordinate of the lower left corner of the resulting text*/ 100,
-                                 /*in case of multiple lines, allign text to left*/ DSTF_LEFT));
+									/*text to be drawn*/ "bla\0",
+									/*number of bytes in the string, -1 for NULL terminated strings*/ -1,
+									/*x coordinate of the lower left corner of the resulting text*/ 100,
+									/*y coordinate of the lower left corner of the resulting text*/ 100,
+									/*in case of multiple lines, allign text to left*/ DSTF_LEFT));
 
-
+	
 	/* switch between the displayed and the work buffer (update the display) */
 	DFBCHECK(primary->Flip(primary,
-                           /*region to be updated, NULL for the whole surface*/NULL,
-                           /*flip flags*/0));
+							/*region to be updated, NULL for the whole surface*/NULL,
+							/*flip flags*/0));
+
+	
     
     /* wait 5 seconds before terminating*/
 	sleep(2);

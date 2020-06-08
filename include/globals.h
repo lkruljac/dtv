@@ -82,7 +82,8 @@ extern IDirectFB *dfbInterface;
 extern int screenWidth;
 extern int screenHeight;
 extern DFBSurfaceDescription surfaceDesc;
-
+extern IDirectFBFont *fontInterface;
+extern DFBFontDescription fontDesc;
 
 extern int drawVolumeFlag;
 

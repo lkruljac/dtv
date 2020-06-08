@@ -17,5 +17,6 @@ if (err != DFB_OK)                                          \
 
 void *GraphicThread();
 void DrawLogo();
+void DrawVolumeStatus();
 
 #endif

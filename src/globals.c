@@ -115,3 +115,6 @@ DFBSurfaceDescription surfaceDesc;
 int drawVolumeFlag = 0 ;
 
 int drawCurrentChanellFlag = 0;
+
+IDirectFBFont *fontInterface = NULL;
+DFBFontDescription fontDesc;
