@@ -1,5 +1,23 @@
-#include "pat.h"
+/****************************************************************************
+*
+* FERIT
+*
+* -----------------------------------------------------
+* Konstrukcijski zadatak kolegij: Digitalna videotehnika
+* -----------------------------------------------------
+*
+* pat.c
+*
+* Purpose: Parsing stream sections to PAT
+*
+* Made on 18.6.2020.
+*
+* @Author Luka Kruljac
+* @E-mail luka97kruljac@gmail.com
+*****************************************************************************/
 
+
+#include "pat.h"
 #include "globals.h"
 #include "streamplayer.h"
 

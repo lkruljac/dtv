@@ -1,3 +1,23 @@
+/****************************************************************************
+*
+* FERIT
+*
+* -----------------------------------------------------
+* Konstrukcijski zadatak kolegij: Digitalna videotehnika
+* -----------------------------------------------------
+*
+* globals.h
+*
+* Purpose: Decalration of global(most of them extern) variables
+*
+* Made on 18.6.2020.
+*
+* @Author Luka Kruljac
+* @E-mail luka97kruljac@gmail.com
+*****************************************************************************/
+
+
+
 #ifndef MY_GLOBALS_H
 #define	MY_GLOBALS_H
 
@@ -75,7 +95,7 @@ extern	uint32_t videoStreamHandle;
 
 extern int patFlag;
 extern int pmtFlag;
-
+extern int allPmtflag;
 
 extern IDirectFBSurface *primary;
 extern IDirectFB *dfbInterface;

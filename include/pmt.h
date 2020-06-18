@@ -1,3 +1,21 @@
+/****************************************************************************
+*
+* FERIT
+*
+* -----------------------------------------------------
+* Konstrukcijski zadatak kolegij: Digitalna videotehnika
+* -----------------------------------------------------
+*
+* pmt.h
+*
+* Purpose: Parsing stream sections to PMT
+*
+* Made on 18.6.2020.
+*
+* @Author Luka Kruljac
+* @E-mail luka97kruljac@gmail.com
+*****************************************************************************/
+
 #ifndef PMT_H
 #define PMT_H
 

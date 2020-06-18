@@ -1,5 +1,25 @@
-#include "globals.h"
+/****************************************************************************
+*
+* FERIT
+*
+* -----------------------------------------------------
+* Konstrukcijski zadatak kolegij: Digitalna videotehnika
+* -----------------------------------------------------
+*
+* globals.c
+*
+* Purpose: initializing values of all globals varibales
+*
+* Made on 18.6.2020.
+*
+* @Author Luka Kruljac
+* @E-mail luka97kruljac@gmail.com
+*****************************************************************************/
 
+
+// Initialization of global variables
+
+#include "globals.h"
 
 struct volumeStatus volumeStatus;
 
@@ -121,7 +141,7 @@ uint32_t videoStreamHandle = 0;
 
 int patFlag = 0;
 int pmtFlag = 0;
-
+int allPmtFlag = 0;
 IDirectFBSurface *primary = NULL;
 IDirectFB *dfbInterface = NULL;
 int screenWidth = 0;

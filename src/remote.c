@@ -1,3 +1,21 @@
+/****************************************************************************
+*
+* FERIT
+*
+* -----------------------------------------------------
+* Konstrukcijski zadatak kolegij: Digitalna videotehnika
+* -----------------------------------------------------
+*
+* remote.c
+*
+* Purpose: Enabling using remote independed of rest program flow
+*
+* Made on 18.6.2020.
+*
+* @Author Luka Kruljac
+* @E-mail luka97kruljac@gmail.com
+*****************************************************************************/
+
 #include"remote.h"
 #include"streamplayer.h"
 #include"graphic.h"
@@ -41,8 +59,10 @@ void *listenRemote(){
 			printf("Error while reading input events !");
 			return;
 		}
+
         int result;
         result = processKey(eventBuf);
+
         if(NOERROR == result){
 
         }

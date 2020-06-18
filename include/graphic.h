@@ -1,3 +1,21 @@
+/****************************************************************************
+*
+* FERIT
+*
+* -----------------------------------------------------
+* Konstrukcijski zadatak kolegij: Digitalna videotehnika
+* -----------------------------------------------------
+*
+* graphic.h
+*
+* Purpose: Enabling drawing graphic independed of rest program flow
+*
+* Made on 18.6.2020.
+*
+* @Author Luka Kruljac
+* @E-mail luka97kruljac@gmail.com
+*****************************************************************************/
+
 #ifndef GRAPHIC_H
 #define GRAPHIC_H
 

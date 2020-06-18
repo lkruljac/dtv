@@ -1,3 +1,20 @@
+/****************************************************************************
+*
+* FERIT
+*
+* -----------------------------------------------------
+* Konstrukcijski zadatak kolegij: Digitalna videotehnika
+* -----------------------------------------------------
+*
+* remote.h
+*
+* Purpose: Enabling using remote independed of rest program flow
+*
+* Made on 18.6.2020.
+*
+* @Author Luka Kruljac
+* @E-mail luka97kruljac@gmail.com
+*****************************************************************************/
 
 #ifndef REMOTE_H
 #define REMOTE_H

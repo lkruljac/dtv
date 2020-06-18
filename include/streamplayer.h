@@ -1,3 +1,21 @@
+/****************************************************************************
+*
+* FERIT
+*
+* -----------------------------------------------------
+* Konstrukcijski zadatak kolegij: Digitalna videotehnika
+* -----------------------------------------------------
+*
+* streamplayer.h
+*
+* Purpose: Enabling stream representation on screen independed of rest program flow, and changing chanells
+*
+* Made on 18.6.2020.
+*
+* @Author Luka Kruljac
+* @E-mail luka97kruljac@gmail.com
+*****************************************************************************/
+
 #ifndef STREAM_PLAYER_H
 #define STREAM_PLAYER_H
 

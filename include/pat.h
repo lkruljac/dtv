@@ -1,4 +1,21 @@
-#ifndef PAT_H
+/****************************************************************************
+*
+* FERIT
+*
+* -----------------------------------------------------
+* Konstrukcijski zadatak kolegij: Digitalna videotehnika
+* -----------------------------------------------------
+*
+* pat.h
+*
+* Purpose: Parsing stream sections to PAT
+*
+* Made on 18.6.2020.
+*
+* @Author Luka Kruljac
+* @E-mail luka97kruljac@gmail.com
+*****************************************************************************/
+
 #define PAT_H
 
 #include "tdp_api.h"

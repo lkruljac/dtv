@@ -1,22 +1,41 @@
+/****************************************************************************
+*
+* FERIT
+*
+* -----------------------------------------------------
+* Konstrukcijski zadatak kolegij: Digitalna videotehnika
+* -----------------------------------------------------
+*
+* pmt.c
+*
+* Purpose: Parsing stream sections to PMT
+*
+* Made on 18.6.2020.
+*
+* @Author Luka Kruljac
+* @E-mail luka97kruljac@gmail.com
+*****************************************************************************/
+
 #include "pat.h"
 #include "pmt.h"
 #include "globals.h"
 #include "streamplayer.h"
 #include "programmap.h"
 
+// Main function of ParsePmt thread
+
 void *ParsePmt(){
 	printf("\nNow parsing pmts in separated thread...\n");
 	int result;
     pmt = malloc(pat.programCounter * sizeof(PMT_TABLE));
-    
     program_map = malloc(pat.programCounter * sizeof(PROGRAM_MAP));
 
 	uint32_t patFilterHandle;
     int programIndex;
+    
+    //For each PID in pat table, parse PMT, skip first PID(16)
     for(programIndex=1; programIndex<pat.programCounter; programIndex++){
-		
-	
-        
+		        
 		parserProgramIndex = programIndex;
         pmtFlag = 0;
         printf("\n\tProgram index: %d\n", programIndex);
@@ -50,6 +69,7 @@ void *ParsePmt(){
         //PMT_to_ProgramMap(pmt[programIndex], programIndex);
 
     }
+    allPmtFlag = 1;
     Print_ProgramMap();
 }
 
@@ -64,6 +84,8 @@ int32_t myPMTSecFilterCallback(uint8_t *buffer)
 }
 
 
+
+// Printing parsed data for testing
 void printPmtTable(PMT_TABLE *pmt){
     printf("\nPMT:\n");
     printf("Table id:\t%d\n", pmt->table_id);
@@ -99,7 +121,7 @@ void printPmtTable(PMT_TABLE *pmt){
     
 }
 
-
+// Parsing buffer to struct PMT, shifting and addition bits 
 void parseBufferToPmt(uint8_t *buffer, PMT_TABLE *pmt){
     
     
@@ -193,6 +215,7 @@ void parseBufferToPmt(uint8_t *buffer, PMT_TABLE *pmt){
 
 }
 
+// Parsing whole PMT to applicaion needed struct
 void PMT_to_ProgramMap(PMT_TABLE pmt, int index){
 	
     int i;
@@ -235,7 +258,7 @@ void PMT_to_ProgramMap(PMT_TABLE pmt, int index){
    
 }
 
-
+// Lookup for audio types, streem data(from PMT) to api data(MACRO)
 tStreamType getAudioType(int type){
 	tStreamType ret = 0;
 	switch(type){
@@ -262,7 +285,7 @@ tStreamType getAudioType(int type){
 	}	
 	return ret;
 }
-
+// Lookup for video types, streem data(from PMT) to api data(MACRO)
 tStreamType getVideoType(int type){
 	tStreamType ret = 0;
 	switch(type){
@@ -286,7 +309,7 @@ tStreamType getVideoType(int type){
 	}	
 	return ret;
 }
-
+// Lookup for stream types, streem data(from PMT) to streamType (adio)/(video)
 int getTypeOfStreamType(uint8_t type){
     
     int returnValue = 0;
@@ -318,7 +341,7 @@ int getTypeOfStreamType(uint8_t type){
 
 }
 
-
+// Print program map, function used for testing
 void Print_ProgramMap(){
 	int i;
 	int size;

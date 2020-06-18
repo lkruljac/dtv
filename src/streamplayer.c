@@ -1,3 +1,21 @@
+/****************************************************************************
+*
+* FERIT
+*
+* -----------------------------------------------------
+* Konstrukcijski zadatak kolegij: Digitalna videotehnika
+* -----------------------------------------------------
+*
+* streamplayer.c
+*
+* Purpose: Enabling stream representation on screen independed of rest program flow, and changing chanells
+*
+* Made on 18.6.2020.
+*
+* @Author Luka Kruljac
+* @E-mail luka97kruljac@gmail.com
+*****************************************************************************/
+
 #include "streamplayer.h"
 
 void* PlayStream(){
@@ -52,8 +70,8 @@ void* PlayStream(){
 
     fflush(stdin);
     pthread_mutex_unlock(&statusMutex);
-    printf("Press any key to stop\n");
 
+    printf("Press any key to stop\n");
     getchar();
 	while(getchar() );
 	
